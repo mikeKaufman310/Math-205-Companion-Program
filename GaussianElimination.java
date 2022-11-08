@@ -1,6 +1,6 @@
 //Wrapper class for eliminate method
 public class GaussianElimination {
-    public Fraction[][] eliminate(Fraction[][] ogMatrix){
+    public static Fraction[][] eliminate(Fraction[][] ogMatrix){
         Fraction[][] result = new Fraction[ogMatrix.length][ogMatrix[0].length];
         for(int i = 0; i < ogMatrix.length; i++){//copy matrix
             for(int j = 0; j < ogMatrix[i].length; j++){
@@ -20,6 +20,8 @@ public class GaussianElimination {
              * Kill all other non-zero rows with the leading one (need to check if fraction)
              * advance to next column
              * increment number of leading ones
+             * 
+             * result[cols][rows]
              */
             int killerRowNumber = -1;
             for(int i = 0; i < rows;i++){//find a leading one
@@ -41,9 +43,9 @@ public class GaussianElimination {
             //kill all the other rows
             for(int i = 0; i < rows; i++){
                 for(int j = 0; j < cols; j++){
-                    if(j != killerRowNumber){
-                        Fraction factorOfMultiplication = result[j][0];
-                        result[j][i] = result[i][j].add(result[i][killerRowNumber].multiply(factorOfMultiplication).negative(), result[j][i]);
+                    if(i != killerRowNumber){
+                        Fraction factorOfMultiplication = result[0][i];
+                        result[j][i] = result[i][j].add(result[j][killerRowNumber].multiply(factorOfMultiplication).negative(), result[j][i]);
                     }
                 }
             }
@@ -52,5 +54,30 @@ public class GaussianElimination {
             currentCol++;
         }
         return result;
+    }
+
+    public static void main(String[] args){
+        Fraction[][] mat = new Fraction[2][2];
+        for(int i = 0; i < mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                mat[i][j] = new Fraction(1, 1);
+            }
+        }
+
+        printMatTest(mat);
+
+        System.out.println();
+
+        printMatTest(eliminate(mat));
+        
+    }
+
+    public static void printMatTest(Fraction[][] mat){
+        for(int i = 0; i < mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                System.out.print(mat[j][i].toString() + " ");
+            }
+            System.out.println();
+        }
     }
 }
