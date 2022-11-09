@@ -73,13 +73,4 @@ public class GaussianElimination {
         return result;
     }
 
-
-    public static void printMatTest(Fraction[][] mat){
-        for(int i = 0; i < mat.length; i++){
-            for(int j = 0; j < mat[0].length; j++){
-                System.out.print(mat[j][i].toString() + " ");
-            }
-            System.out.println();
-        }
-    }
 }
