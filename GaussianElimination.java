@@ -87,34 +87,24 @@ public class GaussianElimination {
         int rows = mat[0].length;
         int rowsSortNumber = 0;
         for(int i = 0; i < cols; i++){//iterate columns
-            boolean almostBottom = false;
             for(int j = rowsSortNumber; j < rows; j++){
-                if(j+1 == rows){
-                    almostBottom = true;
-                }
-                if(mat[i][j].numerator == mat[i][j].denominator){
-                    Fraction[] temp = new Fraction[cols];
-                    for(int k = 0; k < cols; k++){
-                        temp[k] = mat[k][j];//temp row with leading one
-                    }
-                    if(!almostBottom){
-                        for(int k = 0; k < cols;k++){
-                            mat[k][j] = mat[k][j+1];//swap part 1
+                if(mat[i][j].numerator == mat[i][j].denominator && j == rowsSortNumber){
+                    rowsSortNumber++;
+                    break;
+                }else{//0 and cant be above
+                    for(int k = rowsSortNumber+1; k < rows; k++){
+                        if(mat[i][k].numerator == mat[i][k].denominator){
+                            Fraction[] temp = new Fraction[cols];
+                            for(int l = 0; l < cols; l++){
+                                temp[l] = mat[l][k];//temp row with leading one
+                            }
+                            for(int l = 0; l < cols; l++){
+                                mat[l][k] = mat[l][rowsSortNumber];
+                                mat[l][rowsSortNumber] = temp[l];
+                            }
+                            rowsSortNumber++;
+                            break;
                         }
-                        for(int k = 0; k < cols;k++){
-                            mat[k][j+1] = temp[k];//swap part 2
-                        }
-                        rowsSortNumber++;
-                        break;
-                    }else{
-                        for(int k = 0; k < cols;k++){
-                            mat[k][j] = mat[k][j-1];//swap part 1
-                        }
-                        for(int k = 0; k < cols;k++){
-                            mat[k][j-1] = temp[k];//swap part 2
-                        }
-                        rowsSortNumber++;
-                        break;
                     }
                 }
             }
