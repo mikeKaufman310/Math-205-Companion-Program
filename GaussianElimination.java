@@ -50,19 +50,27 @@ public class GaussianElimination {
             }
 
             //getting leading one in killer row
+            Fraction factorForLeadOne = result[currentCol][killerRowNumber].reciprocal();
             for(int i = 0; i < cols; i++){
-                result[i][killerRowNumber] = result[i][killerRowNumber].multiply(result[currentCol][killerRowNumber].reciprocal());
+                result[i][killerRowNumber] = result[i][killerRowNumber].multiply(factorForLeadOne);
             }
+
+            System.out.println("Getting leading one in row:");
+            DisplayRowReducedMatrix.Display(result);
+
 
             //kill all the other rows
             for(int i = 0; i < rows; i++){
-                Fraction factor = result[currentCol][i];
-                for(int j = currentCol; j < cols; j++){
-                    result[j][i] = result[j][i].add((factor.multiply(result[j][killerRowNumber])).negative());
+                if(i != killerRowNumber){
+                    Fraction factor = result[currentCol][i];
+                    for(int j = currentCol; j < cols; j++){
+                        result[j][i] = result[j][i].add((factor.multiply(result[j][killerRowNumber])).negative());
+                    }
                 }
             }
 
-
+            System.out.println("Kill other rows of in the current column");
+            DisplayRowReducedMatrix.Display(result);
             
 
             numLeadingOnes++;

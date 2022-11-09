@@ -39,13 +39,6 @@ public class Fraction {
         return result;
     }
 
-    public Fraction add(Fraction f1, Fraction f2){
-        Fraction result = new Fraction(0,0);
-        result.numerator = f1.numerator + f2.numerator;
-        result.denominator = f1.denominator + f2.denominator;
-        return result;
-    }
-
     public static Integer toInt(Fraction frac){
         if(frac.numerator == frac.denominator){
             return 1;

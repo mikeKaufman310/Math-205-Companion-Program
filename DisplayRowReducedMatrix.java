@@ -5,9 +5,12 @@ public class DisplayRowReducedMatrix {
             for(int j = 0; j < mat[0].length; j++){//cols
                 if(Fraction.toInt(mat[j][i]) != null){
                     System.out.print(Fraction.toInt(mat[j][i]) + " ");
+                }else{
+                    System.out.print(mat[j][i].toString() + " ");
                 }
             }
             System.out.println();
         }
+        System.out.println();
     }
 }

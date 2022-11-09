@@ -7,7 +7,11 @@ public class Test {
                 mat[i][j] = new Fraction(1, 1);
             }
         }
+        Fraction frac = new Fraction(3, 1);
+        mat[0][0] = frac;
         //End Test Matrix Creation
+
+        DisplayRowReducedMatrix.Display(mat);
 
         boolean RR = false;
 
