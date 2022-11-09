@@ -46,6 +46,15 @@ public class Fraction {
         return result;
     }
 
+    public static Integer toInt(Fraction frac){
+        if(frac.numerator == frac.denominator){
+            return 1;
+        }else if(frac.numerator == 0){
+            return 0;
+        }
+        return null;
+    }
+
     public String toString(){
         String str = "";
         str += this.numerator;

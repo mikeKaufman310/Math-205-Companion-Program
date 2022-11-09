@@ -73,21 +73,6 @@ public class GaussianElimination {
         return result;
     }
 
-    public static void main(String[] args){
-        Fraction[][] mat = new Fraction[2][2];
-        for(int i = 0; i < mat.length; i++){
-            for(int j = 0; j < mat[0].length; j++){
-                mat[i][j] = new Fraction(1, 1);
-            }
-        }
-
-        printMatTest(mat);
-
-        System.out.println();
-
-        printMatTest(eliminate(mat));
-        
-    }
 
     public static void printMatTest(Fraction[][] mat){
         for(int i = 0; i < mat.length; i++){
