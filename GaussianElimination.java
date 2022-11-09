@@ -35,17 +35,7 @@ public class GaussianElimination {
                 break;
             }
 
-            /**
-             * Algorithm:
-             * Check if row has leading 0
-             * Find row that has leading non-zero
-             * Turn leading non-zero into one (need to check if fraction)
-             * Kill all other non-zero rows with the leading one (need to check if fraction)
-             * advance to next column
-             * increment number of leading ones
-             * 
-             * result[cols][rows]
-             */
+        
             int killerRowNumber = -1;
             for(int i = 0; i < rows;i++){//find a leading one
                 if(result[currentCol][i].numerator != 0 && rowsWithOne[i] != 1){
