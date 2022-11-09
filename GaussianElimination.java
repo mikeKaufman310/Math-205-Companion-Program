@@ -12,11 +12,28 @@ public class GaussianElimination {
         int numLeadingOnes = 0;
         int currentCol = 0;
         int[] rowsWithOne = new int[rows];//use to keep track of what i cant use for killer rows anymore
+        int numAllZeroRows = 0;
         for(int i = 0; i < rowsWithOne.length; i++){
             rowsWithOne[i] = 0;//0 means not been used as killer algo, 1 has
         }
         while(numLeadingOnes < rows){
-            
+            //check for number of non zero rows
+            for(int i = 0; i < rows; i++){
+                boolean allZero = true;
+                for(int j = 0; j < cols; j++){
+                    if(result[j][i].numerator != 0){
+                        allZero = false;
+                    }
+                }
+                if(allZero){
+                    numAllZeroRows++;
+                }
+            }
+
+            //check if done
+            if(numAllZeroRows + numLeadingOnes == rows){
+                break;
+            }
 
             /**
              * Algorithm:
@@ -38,39 +55,77 @@ public class GaussianElimination {
                 }
             }
 
-            if(killerRowNumber == -1){//all zeros in first column
+            if(killerRowNumber == -1){//all zeros in current column
                 continue;
             }
 
-            //getting leading zero in killer row
+            //getting leading one in killer row
             for(int i = 0; i < cols; i++){
-                result[i][killerRowNumber].multiply(result[0][killerRowNumber].reciprocal());
+                result[i][killerRowNumber] = result[i][killerRowNumber].multiply(result[currentCol][killerRowNumber].reciprocal());
             }
 
             //kill all the other rows
-            for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++){
-                    if(i != killerRowNumber){
-                        Fraction factorOfMultiplication = result[0][i];
-                        result[j][i] = result[j][i].add(result[j][killerRowNumber].multiply(factorOfMultiplication).negative(), result[j][i]);
-                    }
+            for(int i = 0; i < rows; i++){//FIXME possible bug here
+                Fraction factor = result[currentCol][i];
+                for(int j = currentCol; j < cols; j++){
+                    result[j][i] = result[j][i].add((factor.multiply(result[j][killerRowNumber])).negative());
                 }
             }
 
-            //get your leading ones
-            for(int i = 0; i < cols; i++){
-                for(int j = 0; j < rows; j++){
-                    if(result[i][j].numerator != 0){
-                        result[i][j] = result[i][j].multiply(result[i][j].reciprocal());
-                        break;
-                    }
-                }
-            }
+
+            //FIXME still need to implement row swaps
+
+            //for tests
+            DisplayRowReducedMatrix.Display(result);
+            System.out.println();
 
             numLeadingOnes++;
             currentCol++;
         }
+
+        result = GaussianElimination.arrange(result);
+
         return result;
+    }
+
+    public static Fraction[][] arrange(Fraction[][] mat){
+        int cols = mat.length;
+        int rows = mat[0].length;
+        int rowsSortNumber = 0;
+        for(int i = 0; i < cols; i++){//iterate columns
+            boolean almostBottom = false;
+            for(int j = rowsSortNumber; j < rows; j++){
+                if(j+1 == rows){
+                    almostBottom = true;
+                }
+                if(mat[i][j].numerator == mat[i][j].denominator){
+                    Fraction[] temp = new Fraction[cols];
+                    for(int k = 0; k < cols; k++){
+                        temp[k] = mat[k][j];//temp row with leading one
+                    }
+                    if(!almostBottom){
+                        for(int k = 0; k < cols;k++){
+                            mat[k][j] = mat[k][j+1];//swap part 1
+                        }
+                        for(int k = 0; k < cols;k++){
+                            mat[k][j+1] = temp[k];//swap part 2
+                        }
+                        rowsSortNumber++;
+                        break;
+                    }else{
+                        for(int k = 0; k < cols;k++){
+                            mat[k][j] = mat[k][j-1];//swap part 1
+                        }
+                        for(int k = 0; k < cols;k++){
+                            mat[k][j-1] = temp[k];//swap part 2
+                        }
+                        rowsSortNumber++;
+                        break;
+                    }
+                }
+            }
+        }
+        return mat;
     }
 
 }
