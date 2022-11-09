@@ -11,7 +11,13 @@ public class GaussianElimination {
         int cols = ogMatrix.length;
         int numLeadingOnes = 0;
         int currentCol = 0;
+        int[] rowsWithOne = new int[rows];//use to keep track of what i cant use for killer rows anymore
+        for(int i = 0; i < rowsWithOne.length; i++){
+            rowsWithOne[i] = 0;//0 means not been used as killer algo, 1 has
+        }
         while(numLeadingOnes < rows){
+            
+
             /**
              * Algorithm:
              * Check if row has leading 0
@@ -25,8 +31,9 @@ public class GaussianElimination {
              */
             int killerRowNumber = -1;
             for(int i = 0; i < rows;i++){//find a leading one
-                if(result[currentCol][i].numerator != 0){
+                if(result[currentCol][i].numerator != 0 && rowsWithOne[i] != 1){
                     killerRowNumber = i;
+                    rowsWithOne[killerRowNumber] = 1;
                     break;
                 }
             }
@@ -45,7 +52,17 @@ public class GaussianElimination {
                 for(int j = 0; j < cols; j++){
                     if(i != killerRowNumber){
                         Fraction factorOfMultiplication = result[0][i];
-                        result[j][i] = result[i][j].add(result[j][killerRowNumber].multiply(factorOfMultiplication).negative(), result[j][i]);
+                        result[j][i] = result[j][i].add(result[j][killerRowNumber].multiply(factorOfMultiplication).negative(), result[j][i]);
+                    }
+                }
+            }
+
+            //get your leading ones
+            for(int i = 0; i < cols; i++){
+                for(int j = 0; j < rows; j++){
+                    if(result[i][j].numerator != 0){
+                        result[i][j] = result[i][j].multiply(result[i][j].reciprocal());
+                        break;
                     }
                 }
             }
