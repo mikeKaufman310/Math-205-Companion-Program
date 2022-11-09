@@ -65,15 +65,13 @@ public class GaussianElimination {
             }
 
             //kill all the other rows
-            for(int i = 0; i < rows; i++){//FIXME possible bug here
+            for(int i = 0; i < rows; i++){
                 Fraction factor = result[currentCol][i];
                 for(int j = currentCol; j < cols; j++){
                     result[j][i] = result[j][i].add((factor.multiply(result[j][killerRowNumber])).negative());
                 }
             }
 
-
-            //FIXME still need to implement row swaps
 
             //for tests
             DisplayRowReducedMatrix.Display(result);
