@@ -9,8 +9,18 @@ public class Test {
         }
         //End Test Matrix Creation
 
-        mat = GaussianElimination.eliminate(mat);
-        DisplayRowReducedMatrix.Display(mat);
+        boolean RR = false;
 
+        for(int i = 0; i < args.length; i++){
+            if(args[i].equals("RowReduce")){
+                RR = true;
+                break;
+            }
+        }
+
+        if(RR){
+            mat = GaussianElimination.eliminate(mat);
+            DisplayRowReducedMatrix.Display(mat);
+        }
     }
 }
