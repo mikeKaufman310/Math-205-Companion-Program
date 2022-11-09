@@ -63,9 +63,7 @@ public class GaussianElimination {
             }
 
 
-            //for tests
-            DisplayRowReducedMatrix.Display(result);
-            System.out.println();
+            
 
             numLeadingOnes++;
             currentCol++;
