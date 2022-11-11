@@ -4,11 +4,13 @@ public class Test {
         Fraction[][] mat = new Fraction[2][2];
         for(int i = 0; i < mat.length; i++){
             for(int j = 0; j < mat[0].length; j++){
-                mat[i][j] = new Fraction(1, 1);
+                mat[i][j] = new Fraction(0, 1);
             }
         }
-        Fraction frac = new Fraction(3, 1);
-        mat[0][0] = frac;
+        //Fraction frac = new Fraction(3, 1);
+        //Fraction frac2 = new Fraction(4, 1);
+        //mat[1][0] = frac;
+        //mat[0][1] = frac2;
         //End Test Matrix Creation
 
         DisplayRowReducedMatrix.Display(mat);
